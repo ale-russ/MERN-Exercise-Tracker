@@ -28,7 +28,7 @@ class EditExercise extends Component {
         axios.get('http://localhost:5000/exercises/'+this.props.match.params.id)
             .then(responce => {
                 this.setState({
-                    username: responce.data.usename,
+                    username: responce.data.username,
                     description: responce.data.description,
                     duration:responce.data.duration,
                     date: new Date(responce.data.date)
@@ -85,7 +85,8 @@ class EditExercise extends Component {
         }
 
         console.log(exercise);
-        axios.post('http://localhost:5000/exercises/update'+this.props.match.params.id, exercise)
+
+        axios.post('http://localhost:5000/exercises/update/'+this.props.match.params.id, exercise)
             .then(res => console.log(res.data));
 
         window.location ='/';
@@ -113,6 +114,7 @@ class EditExercise extends Component {
                                     })
                                 }
                             </select>
+
                     </div>
                     <div className="form-group">
                         <label>Description: </label>

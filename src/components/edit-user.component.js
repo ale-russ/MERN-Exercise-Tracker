@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-//import DatePicker from 'react-datepicker';
-//import 'react-datepicker/dist/react-datepicker.css'
 
 
 class EditUser extends Component {
@@ -49,12 +47,12 @@ class EditUser extends Component {
     onSubmit(e){
         e.preventDefault();
 
-        const exercise  = { 
-            username : this.state.username,
+        const users  = { 
+            username : this.state.username
         }
 
-        console.log(exercise);
-        axios.post('http://localhost:5000/users/update'+this.props.match.params.id, exercise)
+        console.log(users);
+        axios.post('http://localhost:5000/users/update/'+this.props.match.params.id, users)
             .then(res => console.log(res.data));
 
         //window.location ='/';
@@ -64,7 +62,7 @@ class EditUser extends Component {
     render() { 
         return (  
             <div>
-                <h3>Edit Exercise Log</h3>
+                <h3>Edit Users</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Username: </label>
