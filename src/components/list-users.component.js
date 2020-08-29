@@ -11,7 +11,7 @@ const Users = props =>(
         <td>{props.users.updatedAt.substring(0,10)}</td>
         <td>
             <Link to={"/edituser/"+props.users._id}>edit</Link> | 
-            <a href="#" onClick={() => {props.deleteUser(props.users._id) }}> delete </a>
+            <Link href="#" onClick={() => {props.deleteUser(props.users._id) }}> delete </Link>
         </td>
     </tr>
 )
