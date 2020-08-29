@@ -7,19 +7,22 @@ class EditUser extends Component {
         super(props);
 
         this.onChangeUsername = this.onChangeUsername.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
         this.select = React.createRef();
 
         this.state = {
                  username:'',
-                 users: []
+                 users: [],
+                 editUsername: true,
+                 editableUserName: this.username
              }
          }
     
    componentDidMount(){
         axios.get('http://localhost:5000/users/'+this.props.match.params.id)
-            .then(responce => {
+            .then(res => {
                 this.setState({
-                    username: responce.data.usename,
+                    username: res.data.username,
                 })
             })
             .catch((error) =>{
@@ -28,19 +31,19 @@ class EditUser extends Component {
 
 
         axios.get('http://localhost:5000/users/')   
-            .then(responce => {
-                if(responce.data.length > 0){
+            .then(res => {
+                if(res.data.length > 0){
                     this.setState({
-                        users: responce.data.map(user =>user.username),
+                        users: res.data.map(user =>user.username),
                         
                     });
                 }
             })
     }
     
-    onChangeUsername(e){
+    onChangeUsername = e =>{
         this.setState({
-            username: e.target.value
+           username: e.target.value
         }); 
     }
 
@@ -48,16 +51,16 @@ class EditUser extends Component {
         e.preventDefault();
 
         const users  = { 
-            username : this.state.username
+            username : this.state.username,
         }
 
         console.log(users);
+
         axios.post('http://localhost:5000/users/update/'+this.props.match.params.id, users)
             .then(res => console.log(res.data));
 
-        //window.location ='/';
+        window.location ='/userlist/';
     }
-
     
     render() { 
         return (  
@@ -80,10 +83,26 @@ class EditUser extends Component {
                                     })
                                 }
                             </select>
+                            {this.state.editUsername ?
+                            <div className="form-group">
+                                <label>Edit Username: </label>
+                                <input  type="text"
+                                        required
+                                        className="form-control"
+                                        value={this.state.editableUserName}
+                                        onChange={this.onChangeUsername}
+                                />
+                                
+                                <button onClick= {this.onChangeUsername} 
+                                        className="btn btn-primary">
+                                        Save Username
+                                </button>
+                            </div> 
+                            :
+                            null   
+                        }
                     </div>
-                    <div className="form-group">
-                        <input type="submit" value="Edit User" className="btn btn-primary" />
-                    </div>
+                    
                 </form>
             </div>
         );

@@ -20,7 +20,9 @@ class EditExercise extends Component {
                  description : '',
                  duration: 0,
                  date:new Date(),
-                 users: []
+                 users: [],
+                 editUsername : true,
+                 editableUserName: this.username
              }
          }
     
@@ -114,7 +116,24 @@ class EditExercise extends Component {
                                     })
                                 }
                             </select>
-
+                            {this.state.editUsername ?
+                            <div className="form-group">
+                                <label>Edit Username: </label>
+                                <input  type="text"
+                                        required
+                                        className="form-control"
+                                        value={this.state.editableUserName}
+                                        onChange={this.onChangeUsername}
+                                />
+                                
+                                <button onClick= {this.onChangeusername} 
+                                        className="btn btn-primary">
+                                    Save Username
+                                </button>
+                            </div> 
+                            :
+                            null   
+                        }
                     </div>
                     <div className="form-group">
                         <label>Description: </label>
